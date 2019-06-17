@@ -27,11 +27,9 @@ class BST:
 
     def contains(self, value):
         '''
-
         The insert function is recursive, but you can descend through the tree 
         iteratively too. We'll do that here by tracking the current node
         and using a while loop. You can do the same thing for the insert method.
-
         '''
         current = self
 
@@ -48,15 +46,12 @@ class BST:
 
     def delete(self, value, parent=None):
         '''
-
         There are several different possibilities when it comes to delete:
         1) We're deleting a node that has no children
         2) We're deleting a node that has one child 
         3) We're deleting a node that has two children (and therefore need to rebalance the tree)
-
         We keep track of the parent node, because if we want to chop off a branch we're going to have to connect 
         the subnodes of the one we're deleting to the parent above it.
-
         We'll take the iterative approach again, and the start of the method
         is very similar to contains, since we have to find the node to delete it...
         '''
@@ -68,9 +63,11 @@ class BST:
             if value < current.value:
                 parent = current
                 current = current.left
+                continue
             elif value > current.value:
                 parent = current
                 current = current.right
+                continue
 
             # ok we found it, now KILL IT
             else:
@@ -85,11 +82,9 @@ class BST:
                     '''
                     We then have to run through the same process recursively. 
                     This will do the tree balancing
-
                     we are now trying to remove the value to the right of where we currently are
-
                     '''
-                    current.right.remove(current.value, current)
+                    current.right.delete(current.value, current)
 
                     '''
                     at this point we need to consider what happens if we're deleting the root
@@ -124,9 +119,9 @@ class BST:
             return self
 
 
-            # we need this method for the delete
-            def getMinValue(self):
-                current = self
-                while current.left is not None:
-                    current = current.left
-                return current.value
+    # we need this method for the delete
+    def getMinValue(self):
+        current = self
+        while current.left is not None:
+            current = current.left
+        return current.value
